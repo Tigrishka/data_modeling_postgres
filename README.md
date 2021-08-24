@@ -18,7 +18,8 @@ The fact table *songplays* uses information from the *songs* table, *artists* ta
 This query checks the 10 most popular songs users listen to during a period of one year (for instance, 2018)
 
     WITH song_pop AS (
-                       SELECT sp.start_time, a.artist_name, s.title FROM ((songplays sp JOIN songs s ON sp.song_id = s.song_id)
+                       SELECT sp.start_time, a.artist_name, s.title 
+                       FROM ((songplays sp JOIN songs s ON sp.song_id = s.song_id)
                        JOIN artists a ON a.artist_id = sp.artist_id)
                       )
     SELECT st.artist_name, st.title, count(1)
@@ -26,6 +27,7 @@ This query checks the 10 most popular songs users listen to during a period of o
     JOIN song_pop st ON t.start_time = st.start_time
     WHERE t.year = 2018
     GROUP BY st.title, st.artist_name
+    ORDER BY count DESC
     LIMIT 10;
 
 This query shows statistics of how many users visited the music streaming app during a year (for instance, 2018)
@@ -38,7 +40,9 @@ This query shows statistics of how many users visited the music streaming app du
 This query gives an answer about the music app popularity among women and men
     
     WITH user_time AS (
-                       SELECT sp.userid, t.week, t.month, t.year FROM songplays sp JOIN time t ON sp.start_time = t.start_time
+                       SELECT sp.userid, t.week, t.month, t.year 
+                       FROM songplays sp 
+                       JOIN time t ON sp.start_time = t.start_time
                       )
     SELECT u.gender, count(1)
     FROM users u
