@@ -30,9 +30,9 @@ This query checks the 10 most popular songs users listen to during a period of o
 
 This query shows statistics of how many users visited the music streaming app during a year (for instance, 2018)
 
-    SELECT count(DISTINCT sp.userid) \
-    FROM songplays sp \
-    JOIN time t ON sp.start_time = t.start_time \
+    SELECT count(DISTINCT sp.userid)
+    FROM songplays sp
+    JOIN time t ON sp.start_time = t.start_time
     WHERE t.year = 2018;
 
 This query gives an answer about the music app popularity among women and men
