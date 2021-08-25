@@ -12,7 +12,7 @@ All SQL queries to `CREATE`, `DROP`, `INSERT` into tables are contained in the *
 2. The file **etl.py** reads and processes the JSON song and log datasets. The processed data from derived song files, `data/song_data`, populates *songs* and *artists* database tables, whereas the data extracted from log files, `data/log_data` is loaded into *users* and *time* tables.<br>
 The fact table *songplays* uses information from the *songs* table, *artists* table, and original log files.
 3. The file **test.ipynb** is used to confirm that the records have been successfully inserted into each table.
-![](sparkify_db_er.jpg?raw=true)
+![](sparkifydb_erd.jpg?raw=true)
 
 ## SQL Queries Examples
 This query checks the 10 most popular songs users listen to during a period of one year (for instance, 2018)
