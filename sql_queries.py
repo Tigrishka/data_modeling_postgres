@@ -9,13 +9,13 @@ time_table_drop = "DROP TABLE IF EXISTS time"
 # CREATE TABLES
 
 songplay_table_create = ("""CREATE TABLE IF NOT EXISTS songplays (
-songplay_id serial, 
-start_time bigint, 
-userId int, 
+songplay_id serial NOT NULL, 
+start_time timestamp, 
+userId int NOT NULL, 
 level varchar, 
 song_id varchar, 
 artist_id varchar, 
-session_id int, 
+session_id int NOT NULL, 
 location varchar, 
 user_agent varchar, 
 PRIMARY KEY (songplay_id));
@@ -23,7 +23,7 @@ PRIMARY KEY (songplay_id));
 
 user_table_create = ("""
 CREATE TABLE IF NOT EXISTS users (
-userId int, 
+userId int NOT NULL, 
 firstName varchar(15), 
 lastName varchar(20), 
 gender varchar(6), 
@@ -34,9 +34,9 @@ PRIMARY KEY (userId)
 
 song_table_create = ("""
 CREATE TABLE IF NOT EXISTS songs (
-song_id varchar not null, 
+song_id varchar NOT NULL, 
 title varchar, 
-artist_id varchar not null, 
+artist_id varchar NOT NULL, 
 year int, 
 duration float, PRIMARY KEY (song_id)
 );
@@ -55,7 +55,7 @@ PRIMARY KEY (artist_id)
 
 time_table_create = ("""
 CREATE TABLE IF NOT EXISTS time (
-start_time bigint, 
+start_time timestamp, 
 hour int, 
 day int, 
 week int, 
@@ -70,13 +70,13 @@ PRIMARY KEY (start_time)
 
 songplay_table_insert = ("""
 INSERT INTO songplays (songplay_id, start_time, userId, level, song_id, artist_id, session_id, location, user_agent)\
-VALUES(DEFAULT,%s,%s,%s,%s,%s,%s,%s,%s);
+VALUES(DEFAULT,%s::timestamp,%s,%s,%s,%s,%s,%s,%s);
 """)
 
 user_table_insert = ("""
 INSERT INTO users (userId, firstName, lastName, gender, level) 
 VALUES(%s,%s,%s,%s,%s)
-ON CONFLICT DO NOTHING;
+ON CONFLICT (userId) DO UPDATE SET level=EXCLUDED.level;
 """)
 
 song_table_insert = ("""
@@ -94,7 +94,7 @@ ON CONFLICT DO NOTHING;
 
 time_table_insert = ("""
 INSERT INTO time (start_time, hour, day, week, month, year, weekday)
-VALUES(%s,%s,%s,%s,%s,%s,%s)
+VALUES(%s::timestamp,%s,%s,%s,%s,%s,%s)
 ON CONFLICT DO NOTHING;
 """)
 
