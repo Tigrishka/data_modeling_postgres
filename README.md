@@ -18,18 +18,24 @@ The fact table *songplays* uses information from the *songs* table, *artists* ta
 
 ## How to run the scripts
 1. run the Python script **create_tables.py** in a command-line by typing `python` or `python3` depending on your Python installation
+        
         python3 create_tables.py
+        
 and then press `Enter`. If you get no error messages, the *sparkify* database is created and the connection to the sparkifydb is set up.
 2. run the Python script **etl.py** also in a command-line you used in the #1 step
+
         python3 etl.py
+        
 Then press `Enter`. This script will process the entire datasets (the number of processed files from `data/song_data` and `data/log_data` will be displayed in terminal window) and load the data into five tables (see ER diagram above).
 
 3. a) Jypiter Notebooks **test.ipynb** and **sql_queries4analysis.ipynb** can be run from terminal with these commands:
+
         jupyter nbconvert --execute --clear-output test.ipynb
+        
         jupyter nbconvert --execute --clear-output sql_queries4analysis.ipynb
 Dont' forget to press `Enter` after every command. As next, you can open .ipynb files in IDE like *PyCharm* to see the output of cells.
 
-3. b) You can open **test.ipynb** and **sql_queries4analysis.ipynb** in PyCharm initially and execute cells code in IDE directly.
+   b) You can open **test.ipynb** and **sql_queries4analysis.ipynb** in PyCharm initially and execute cells code in IDE directly.
 
 ## Docstrings used in the pipeline
         def process_log_file(cur, filepath):
