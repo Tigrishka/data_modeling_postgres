@@ -38,10 +38,60 @@ Dont' forget to press `Enter` after every command. As next, you can open .ipynb 
    b) You can open **test.ipynb** and **sql_queries4analysis.ipynb** in PyCharm initially and execute cells code in IDE directly.
 
 ## Docstrings used in the pipeline
+In the module **create_tables.py**:
+        def create_database():
+         """
+         Description:
+         This function creates the database with UTF8 encoding and connects to the sparkifydb
+         Returns the connection and cursor to sparkifydb
+
+         Arguments:
+         None
+
+         Returns: 
+         cur, conn
+         """
+
+        def drop_tables(cur, conn):
+         """
+         Drops each table using the queries in `drop_table_queries` list.
+        
+         Arguments:
+              cur: the cursor object. 
+              conn: connection to sparkify database. 
+         Returns:
+         None
+         """
+
+        def create_tables(cur, conn):
+         """
+         Creates each table using the queries in `create_table_queries` list.
+         Arguments:
+              cur: the cursor object. 
+              conn: connection to sparkify database. 
+         Returns:
+         None
+         """
+
+In the module **rtl.py**:
+
+        def process_song_file(cur, filepath):
+         """
+         Description: This function can be used to read the file in the filepath (`data/song_data`)
+         to get the song and artist info and used to populate the *songs* and *artists* dim tables.
+
+         Arguments:
+         cur: the cursor object. 
+         filepath: song data file path. 
+
+         Returns:
+         None
+         """
+
         def process_log_file(cur, filepath):
           """
-          Description: This function can be used to read the file in the filepath (data/log_data)
-          to get the user and time info and used to populate the users and time dim tables.
+          Description: This function can be used to read the file in the filepath (`data/log_data`)
+          to get the user and time info and used to populate the *users* and *time* dim tables.
 
           Arguments:
               cur: the cursor object. 
@@ -51,39 +101,13 @@ Dont' forget to press `Enter` after every command. As next, you can open .ipynb 
               None
           """
 
-## SQL Queries Examples
-This query checks the 10 most popular songs users listen to during a period of one year (for instance, 2018)
-
-    WITH song_pop AS (
-                       SELECT sp.start_time, a.artist_name, s.title 
-                       FROM ((songplays sp JOIN songs s ON sp.song_id = s.song_id)
-                       JOIN artists a ON a.artist_id = sp.artist_id)
-                      )
-    SELECT st.artist_name, st.title, count(1)
-    FROM time t
-    JOIN song_pop st ON t.start_time = st.start_time
-    WHERE t.year = 2018
-    GROUP BY st.title, st.artist_name
-    ORDER BY count DESC
-    LIMIT 10;
-
-This query shows statistics of how many users visited the music streaming app during a year (for instance, 2018)
-
-    SELECT count(DISTINCT sp.userid)
-    FROM songplays sp
-    JOIN time t ON sp.start_time = t.start_time
-    WHERE t.year = 2018;
-
-This query gives an answer about the music app popularity among women and men
-    
-    WITH user_time AS (
-                       SELECT sp.userid, t.week, t.month, t.year 
-                       FROM songplays sp 
-                       JOIN time t ON sp.start_time = t.start_time
-                      )
-    SELECT u.gender, count(1)
-    FROM users u
-    JOIN user_time ut ON u.userid = ut.userid
-    WHERE ut.year = 2018
-    GROUP BY u.gender
-    ORDER BY u.gender;
+        def process_data(cur, conn, filepath, func):
+         """
+         Description: This funcition gets all files matching extension `.json` in the filepath 
+         and displays in the terminal window the number of files found and files processed
+         Arguments:
+              cur: the cursor object.
+              conn: connection to sparkify database.
+              filepath: log and song data file path.
+              func: call functions `process_song_file`, `process_log_file`
+         """
