@@ -39,6 +39,7 @@ Dont' forget to press `Enter` after every command. As next, you can open .ipynb 
 
 ## Docstrings used in the pipeline
 In the module **create_tables.py**:
+
         def create_database():
          """
          Description:
@@ -73,7 +74,7 @@ In the module **create_tables.py**:
          None
          """
 
-In the module **rtl.py**:
+In the module **etl.py**:
 
         def process_song_file(cur, filepath):
          """
