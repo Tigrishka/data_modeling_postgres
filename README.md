@@ -18,7 +18,7 @@ The fact table *songplays* uses information from the *songs* table, *artists* ta
 
 ![](sparkifydb_erd.jpg?raw=true)
 
-The *log_files_staing* table stores the log data and is used to load the data into *time*, *users*, and *songplays* tables using the ETL pipeline with the COPY command.
+The *log_files_staging* table stores the log data and is used to load the data into *time*, *users*, and *songplays* tables using the ETL pipeline with the COPY command.
 
 ![](log_files_staging.jpg?raw=true)
 
