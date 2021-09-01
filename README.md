@@ -20,7 +20,7 @@ The fact table *songplays* uses information from the *songs* table, *artists* ta
 
 The *log_files_staging* table stores the log data and is used to load the data into *time*, *users*, and *songplays* tables using the ETL pipeline with the COPY command.
 
-![](log_files_staging.jpg?=100x)
+![](log_files_staging.jpg?=50x)
 
 ## How to run the scripts
 1. run the Python script **create_tables.py** in a command-line by typing `python` or `python3` depending on your Python installation
