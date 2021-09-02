@@ -9,15 +9,16 @@ from sql_queries import *
 
 def process_song_file(cur, song_json_files):
     """
-    Description: This function reads JSON files in the filepath (`data/song_data`) into DataFrame, concatenates it
-    and drops duplicates on `song_id` and `artist_id`
+    Description:
+        This function reads JSON files in the filepath (`data/song_data`) into DataFrame, concatenates it
+        and drops duplicates on `song_id` and `artist_id`
 
      Arguments:
-     cur: the cursor object. 
-     filepath: song data file path. 
+        cur: the cursor object.
+        song_json_files: list of JSON song files generated in the function `process_data`.
 
      Returns:
-     song_files_concat: DataFrame of concatenated song files with removed duplicates
+        song_files_concat: DataFrame of concatenated song files with removed duplicates
      """
             
     all_song_files = []
@@ -30,16 +31,16 @@ def process_song_file(cur, song_json_files):
 def songs_table(song_files_list, cur, conn):
     """
     Description: 
-    This function transforms data from song_files_list into CSV with customized fields 
-    and loads it into the database dim table *songs* using a `copy_from` function.
+        This function transforms data from song_files_list into CSV with customized fields
+        and loads it into the database dim table *songs* using a `copy_from` function.
     
     Arguments:
-     cur: the cursor object.
-     conn: connection to sparkify database.
-     song_files_list: DataFrame of all song data generated in the function `process_song_file`. 
+        cur: the cursor object.
+        conn: connection to sparkify database.
+        song_files_list: DataFrame of all song data generated in the function `process_song_file`.
 
-     Returns:
-     None
+    Returns:
+        None
     """
     
     song_files_fields = song_files_list[['song_id', 'title', 'artist_id', 'year', 'duration']]
@@ -55,16 +56,16 @@ def songs_table(song_files_list, cur, conn):
 def artists_table(song_files_list, cur, conn):
     """
     Description: 
-    This function transforms data from song_files_list into CSV with customized fields
-    and loads it into the database dim table *artists* using a `copy_from` function.
+        This function transforms data from song_files_list into CSV with customized fields
+        and loads it into the database dim table *artists* using a `copy_from` function.
     
     Arguments:
-     cur: the cursor object. 
-     conn: connection to sparkify database.
-     song_files_list: DataFrame of all song data generated in the function `process_song_file`. 
+        cur: the cursor object.
+        conn: connection to sparkify database.
+        song_files_list: DataFrame of all song data generated in the function `process_song_file`.
 
-     Returns:
-     None
+    Returns:
+        None
     """
     
     song_files_fields = song_files_list[['artist_id','artist_name','artist_location','artist_latitude','artist_longitude']]
@@ -79,17 +80,19 @@ def artists_table(song_files_list, cur, conn):
 
 def process_log_file(cur, log_json_files):
     """
-    Description: This function reads files in the filepath (`data/log_data`) into DataFrame,
-    extract the timestamp (`start_time`), hour, day, week of year (`week`), month, year, and weekday from the `ts` column, 
-    concatenates DataFrames
-    and filter records by `NextSong` action
+    Description:
+        This function reads files in the filepath (`data/log_data`) into DataFrame,
+        extract the timestamp (`start_time`), hour, day, week of year (`week`), month, year,
+        and weekday from the `ts` column,
+        concatenates DataFrames
+        and filter records by `NextSong` action
 
-     Arguments:
-     cur: the cursor object. 
-     filepath: song data file path. 
+    Arguments:
+        cur: the cursor object.
+        log_json_files: list of JSON log files generated in the function `process_data`.
 
-     Returns:
-     log_files_concat: DataFrame of concatenated log files filtered by records `NextSong`
+    Returns:
+        log_files_concat: DataFrame of concatenated log files filtered by records `NextSong`
      """
     
     all_log_files = []
@@ -111,16 +114,16 @@ def process_log_file(cur, log_json_files):
 def log_files_staging_table(log_files_list, cur, conn):
     """
     Description: 
-    This function transforms data from log_files_list into CSV with customized fields
-    and loads it into the database staging table *log_files_staging* using a `copy_from` function.
+        This function transforms data from log_files_list into CSV with customized fields
+        and loads it into the database staging table *log_files_staging* using a `copy_from` function.
     
     Arguments:
-     cur: the cursor object. 
-     conn: connection to sparkify database.
-     log_files_list: DataFrame of all song data generated in the function `process_song_file`. 
+        cur: the cursor object.
+        conn: connection to sparkify database.
+        log_files_list: DataFrame of all song data generated in the function `process_song_file`.
 
-     Returns:
-     None
+    Returns:
+        None
     """
     
     log_files_fields = log_files_list[['start_time','hour','day','week','month','year','weekday',
